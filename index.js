@@ -42,10 +42,12 @@ server.get('/api/users/:id', (req, res) => {
     if(user.id === undefined) {
         res.status(404).json({errorMessage: `The user with the the id ${user.id} does not exist`})
     }
+
+    res.status(200).json(user);
     //need code for this
     res.status(500).json({errorMessage: "The user information could not be retrieved"}) 
 
-    res.status(200).json(user);
+    
 });
 
 server.patch('/api/users/:id', (req, res) => {
@@ -53,7 +55,7 @@ server.patch('/api/users/:id', (req, res) => {
     if(updatedUser.id === undefined){
         res.status(404).json({errorMessage: `The user with ID ${updatedUser.id} does not exist`})
     }
-    if(updatedUser.name !== undefined || updatedUser.bio !== undefined){
+    if(updatedUser.name === undefined || updatedUser.bio === undefined){
         res.status(400).json({errorMessage: "please provide name and bio for the user."})
     }
     

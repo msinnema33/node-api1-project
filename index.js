@@ -1,5 +1,6 @@
 const express = require('express');
 const shortid = require('shortid');
+const cors = require('cors');
 const server = express();
 
 server.use(express.json());
@@ -17,7 +18,7 @@ server.get('/api/users', (req, res) => {
 
 server.post('/api/users', (req, res) => {
     const userInfo = req.body;
-    if(req.body.name !== undefined || req.body.bio !== undefined){
+    if(userInfo.name === undefined || userInfo.bio === undefined){
         res.status(400).json({errorMessage: "please provide name and bio for the user."})
     }
     userInfo.id = shortid.generate();

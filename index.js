@@ -12,20 +12,17 @@ let users = [];
 server.get('/api/users', (req, res) => {
     res.status(200).json(users);
 
-    //error on get users
     res.status(500).json({errorMessage: "The users information could not be retrieved"})
 });
 
 server.post('/api/users', (req, res) => {
     const userInfo = req.body;
-    if(userInfo.name === undefined || userInfo.bio === undefined){
+    if(!userInfo.name || !userInfo.bio){
         res.status(400).json({errorMessage: "please provide name and bio for the user."})
     }
     userInfo.id = shortid.generate();
     users.push(userInfo);
     res.status(201).json(userInfo);
-
-    //error on save
     res.status(500).json({errorMessage: "There was an error while saving the user to the database"})
 });
 
@@ -33,39 +30,32 @@ server.delete('/api/users/:id', (req, res) => {
     const deletedUser = req.body;
 
     res.status(204).json(deletedUser);
-
     res.status(500).json({errorMessage: "The user could not be removed"})
-    
-    
+        
 });
 
 server.get('/api/users/:id', (req, res) => {
     const user = req.body;
-    if(user.id === undefined) {
+    if(!user.id) {
         res.status(404).json({errorMessage: `The user with the the id ${user.id} does not exist`})
     }
 
     res.status(200).json(user);
-    //need code for this
     res.status(500).json({errorMessage: "The user information could not be retrieved"}) 
-
     
 });
 
 server.patch('/api/users/:id', (req, res) => {
     const updatedUser = req.body;
-    if(updatedUser.id === undefined){
+    if(!updatedUser.id){
         res.status(404).json({errorMessage: `The user with ID ${updatedUser.id} does not exist`})
     }
-    if(updatedUser.name === undefined || updatedUser.bio === undefined){
+    if(!updatedUser.name || !updatedUser.bio){
         res.status(400).json({errorMessage: "please provide name and bio for the user."})
     }
 
     res.status(200).json(updatedUser);
-    
     res.status(500).json({errorMessage: "The user information could not be modified"})
-
-   
 
 });
 

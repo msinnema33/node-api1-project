@@ -32,9 +32,11 @@ server.post('/api/users', (req, res) => {
 server.delete('/api/users/:id', (req, res) => {
     const deletedUser = req.body;
 
+    res.status(204).json(deletedUser);
+
     res.status(500).json({errorMessage: "The user could not be removed"})
     
-    res.status(204).json(deletedUser);
+    
 });
 
 server.get('/api/users/:id', (req, res) => {
@@ -58,10 +60,12 @@ server.patch('/api/users/:id', (req, res) => {
     if(updatedUser.name === undefined || updatedUser.bio === undefined){
         res.status(400).json({errorMessage: "please provide name and bio for the user."})
     }
+
+    res.status(200).json(updatedUser);
     
     res.status(500).json({errorMessage: "The user information could not be modified"})
 
-    res.status(200).json(updatedUser);
+   
 
 });
 
